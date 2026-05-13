@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics: Large Numbers (Grade 5)</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --primary-blue: #003366; --secondary-blue: #00509E; --light-blue: #E6F0FA; --white: #FFFFFF; --text-dark: #1A1A1A; --accent-blue: #4A90E2; }
+        body { font-family: 'Times New Roman', Times, serif; background: linear-gradient(135deg, var(--white) 0%, var(--light-blue) 100%); color: var(--text-dark); line-height: 1.6; min-height: 100vh; padding-top: 80px; }
+        header { position: fixed; top: 0; left: 0; width: 100%; background-color: var(--primary-blue); color: var(--white); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); z-index: 1000; }
+        .header-title { font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; }
+        .timer-container { display: flex; align-items: center; background-color: var(--white); color: var(--primary-blue); padding: 8px 20px; border-radius: 30px; font-weight: bold; font-size: 1.2rem; border: 2px solid var(--accent-blue); box-shadow: 0 0 10px rgba(74, 144, 226, 0.5); }
+        .timer-container span { margin-left: 10px; font-variant-numeric: tabular-nums; }
+        .container { max-width: 950px; margin: 0 auto; padding: 20px; }
+        section { background-color: var(--white); border-top: 5px solid var(--secondary-blue); border-radius: 8px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0, 51, 102, 0.08); transition: transform 0.3s ease; }
+        section:hover { transform: translateY(-2px); }
+        h1, h2, h3 { color: var(--primary-blue); margin-bottom: 15px; border-bottom: 1px solid var(--light-blue); padding-bottom: 5px; }
+        h1 { font-size: 2.2rem; text-align: center; border-bottom: none;} h2 { font-size: 1.8rem; } h3 { font-size: 1.4rem; border-bottom: none; color: var(--secondary-blue); }
+        .intro-text { font-size: 1.2rem; color: var(--secondary-blue); font-style: italic; margin-bottom: 20px; text-align: center; }
+        .table-container { overflow-x: auto; margin: 20px 0; border-radius: 8px; box-shadow: 0 0 15px rgba(0, 51, 102, 0.1); }
+        table { width: 100%; border-collapse: collapse; text-align: center; font-size: 1.05rem; }
+        th, td { padding: 12px; border: 1px solid var(--light-blue); }
+        th { background-color: var(--primary-blue); color: var(--white); font-weight: bold; font-size: 0.95rem; }
+        .table-subhead th { background-color: var(--secondary-blue); font-size: 0.85rem; }
+        .thai-row td, .thai-row { font-family: 'Sarabun', 'Times New Roman', serif; color: var(--secondary-blue); font-style: italic; }
+        tr:nth-child(even) { background-color: var(--light-blue); }
+        .highlight-row td { font-size: 1.4rem; font-weight: bold; color: var(--primary-blue); background-color: #f0f7ff; }
+        .shapes-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 30px 0 15px 0; }
+        .number-node { display: flex; flex-direction: column; align-items: center; }
+        .digit-circle { width: 60px; height: 60px; background-color: var(--primary-blue); color: var(--white); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2); position: relative; z-index: 2; }
+        .value-box { background-color: var(--light-blue); color: var(--primary-blue); padding: 5px 15px; border-radius: 4px; margin-top: -10px; padding-top: 15px; font-weight: bold; border: 1px solid var(--accent-blue); z-index: 1; }
+        .math-operator { display: flex; align-items: center; font-size: 2rem; color: var(--secondary-blue); font-weight: bold; }
+        .equation-box { background-color: var(--light-blue); padding: 15px; border-radius: 8px; text-align: center; font-family: monospace; font-size: 1.1rem; color: var(--primary-blue); margin-top: 10px; border: 1px dashed var(--accent-blue); }
+        .graph-container { margin: 30px 0; padding: 20px; border: 1px solid var(--light-blue); border-radius: 8px; background: #fafcff; }
+        .bar-row { display: flex; align-items: center; margin-bottom: 15px; }
+        .bar-label { width: 140px; font-weight: bold; color: var(--primary-blue); font-size: 0.95rem; }
+        .bar-track { flex-grow: 1; background-color: var(--light-blue); height: 30px; border-radius: 15px; overflow: hidden; position: relative; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, var(--secondary-blue), var(--accent-blue)); display: flex; align-items: center; justify-content: flex-end; padding-right: 15px; color: var(--white); font-weight: bold; font-size: 0.9rem; transition: width 1s ease-in-out; }
+        .callout { background-color: #fff3cd; border-left: 5px solid #ffeeba; padding: 15px; border-radius: 4px; margin: 20px 0; }
+        .callout-title { font-weight: bold; color: #856404; margin-bottom: 5px; }
+        .quiz-container { background-color: var(--light-blue); padding: 25px; border-radius: 8px; border-left: 5px solid var(--primary-blue); }
+        .question { margin-bottom: 20px; } .question p { font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; color: var(--primary-blue); }
+        input[type="text"] { width: 100%; padding: 10px; font-family: 'Times New Roman', Times, serif; font-size: 1.1rem; border: 2px solid #ccc; border-radius: 4px; }
+        .btn { background-color: var(--primary-blue); color: var(--white); border: none; padding: 12px 25px; font-size: 1.1rem; font-family: 'Times New Roman', Times, serif; font-weight: bold; border-radius: 5px; cursor: pointer; display: block; width: 100%; margin-top: 15px; }
+        .btn:hover { background-color: var(--secondary-blue); }
+        #feedback { margin-top: 20px; padding: 15px; border-radius: 5px; font-weight: bold; text-align: center; font-size: 1.2rem; display: none; }
+        .feedback-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .feedback-error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        ul { padding-left: 20px; } li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-title">Mathematics: Unit 1 - Whole Numbers</div>
+        <div class="timer-container">
+            Reading Time Left: <span id="timer">10:00</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <section>
+            <h1>Lesson 1.1: Reading & Writing Large Numbers</h1>
+            <p class="intro-text">Study Note & Interactive Academic Module</p>
+            <h2>1. Introduction to Whole Numbers</h2>
+            <p>A <strong>whole number (จำนวนนับ)</strong> is any of the counting numbers 0, 1, 2, 3... In Grade 5, we extend our mathematical work far beyond 1,000,000. We are stepping up to the <strong>hundred-millions</strong> place and beyond!</p>
+        </section>
+
+        <section>
+            <h2>2. The Place-Value Chart (up to Hundred-Millions)</h2>
+            <p>Let's map the number <strong>247,365,189</strong> onto our advanced bilingual place-value chart.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th colspan="3" style="background-color: #002244;">Millions Period</th><th colspan="3" style="background-color: #003366;">Thousands Period</th><th colspan="3" style="background-color: #004488;">Ones Period</th></tr>
+                        <tr class="table-subhead"><th>Hundred Millions</th><th>Ten Millions</th><th>Millions</th><th>Hundred Thousands</th><th>Ten Thousands</th><th>Thousands</th><th>Hundreds</th><th>Tens</th><th>Ones</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>100,000,000</td><td>10,000,000</td><td>1,000,000</td><td>100,000</td><td>10,000</td><td>1,000</td><td>100</td><td>10</td><td>1</td></tr>
+                        <tr class="thai-row"><td>ร้อยล้าน</td><td>สิบล้าน</td><td>ล้าน</td><td>แสน</td><td>หมื่น</td><td>พัน</td><td>ร้อย</td><td>สิบ</td><td>หน่วย</td></tr>
+                        <tr class="highlight-row"><td>2</td><td>4</td><td>7</td><td>3</td><td>6</td><td>5</td><td>1</td><td>8</td><td>9</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>3. Key Vocabulary</h2>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Term</th><th>Meaning (English)</th><th>Thai (ภาษาไทย)</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Digit</strong></td><td>A symbol 0–9 used to write numbers</td><td class="thai-row">ตัวเลข / หลัก</td></tr>
+                        <tr><td><strong>Place value</strong></td><td>The position of a digit in a number</td><td class="thai-row">ค่าประจำหลัก</td></tr>
+                        <tr><td><strong>Value of a digit</strong></td><td>Place value × the digit</td><td class="thai-row">ค่าของตัวเลข</td></tr>
+                        <tr><td><strong>Standard form</strong></td><td>Number written with digits (e.g., 23,456)</td><td class="thai-row">รูปจำนวน</td></tr>
+                        <tr><td><strong>Word form</strong></td><td>Number written in words</td><td class="thai-row">รูปคำอ่าน</td></tr>
+                        <tr><td><strong>Expanded form</strong></td><td>Sum of place-value parts</td><td class="thai-row">รูปกระจาย</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>4. Reading Large Numbers</h2>
+            <h3>In English</h3>
+            <ul>
+                <li><strong>Step 1:</strong> Group digits in 3s from the right using commas: 47236158 → <strong>47,236,158</strong></li>
+                <li><strong>Step 2:</strong> Read each group, then say its 'family name' (million / thousand).</li>
+                <li><strong>Step 3:</strong> The last group (ones) is read without a family name.</li>
+            </ul>
+            <h3 style="margin-top: 25px;">In Thai</h3>
+            <p>Thai groups by หลัก: หน่วย-สิบ-ร้อย-พัน-หมื่น-แสน-ล้าน-สิบล้าน-ร้อยล้าน</p>
+            <p style="text-align: center; font-size: 1.2rem; margin: 15px 0;" class="thai-row">Example: 47,236,158 → "สี่สิบเจ็ดล้านสองแสนสามหมื่นหกพันหนึ่งร้อยห้าสิบแปด"</p>
+        </section>
+
+        <section>
+            <h2>5. Expanded Form</h2>
+            <p>Expanded form breaks down a standard number into an addition sentence showing the value of each digit. Let's analyze <strong>47,236,158</strong>.</p>
+            <div class="shapes-container">
+                <div class="number-node"><div class="digit-circle">4</div><div class="value-box">40,000,000</div></div><div class="math-operator">+</div>
+                <div class="number-node"><div class="digit-circle">7</div><div class="value-box">7,000,000</div></div><div class="math-operator">+</div>
+                <div class="number-node"><div class="digit-circle">2</div><div class="value-box">200,000</div></div><div class="math-operator">+</div>
+                <div class="number-node"><div class="digit-circle">3</div><div class="value-box">30,000</div></div><div class="math-operator">+</div>
+                <div class="number-node" style="opacity: 0.7;"><div class="digit-circle">...</div><div class="value-box">and so on</div></div>
+            </div>
+            <div class="equation-box">(4 × 10,000,000) + (7 × 1,000,000) + (2 × 100,000) + (3 × 10,000) + (6 × 1,000) + (1 × 100) + (5 × 10) + (8 × 1)</div>
+        </section>
+
+        <section>
+            <h2>6. Review & Summary</h2>
+            <div class="callout" style="background-color: #f8d7da; border-left-color: #f5c6cb;">
+                <div class="callout-title" style="color: #721c24;">⚠️ Common Mistakes to Avoid</div>
+                <ul>
+                    <li>Forgetting to place commas every 3 digits.</li>
+                    <li>Confusing 'place value' with 'value of a digit'.</li>
+                    <li>Saying 'and' between groups in formal English.</li>
+                    <li>Skipping zeros in word form.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>7. Knowledge Assessment (Exit Ticket)</h2>
+            <div class="quiz-container">
+                <form id="assessmentForm">
+                    <div class="question"><p>Q1: Look at the number <strong>60,401,907</strong>. What is the <u>place value</u> of the digit 4?</p><input type="text" id="q1" placeholder="e.g., Millions, Thousands, etc." required></div>
+                    <div class="question"><p>Q2: What is the word form of <strong>5,283,164</strong>?</p><input type="text" id="q2" placeholder="Type the words here..." required></div>
+                    <div class="question"><p>Q3: What is the <u>value of the digit 8</u> in the number <strong>108,250,073</strong>?</p><input type="text" id="q3" placeholder="Write the value in figures (e.g., 100)" required></div>
+                    <button type="button" class="btn" onclick="checkAnswers()">Submit Assessment</button>
+                </form>
+                <div id="feedback"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        let totalSeconds = 10 * 60; const timerDisplay = document.getElementById('timer');
+        const countdown = setInterval(() => {
+            if (totalSeconds <= 0) { clearInterval(countdown); timerDisplay.innerHTML = "00:00 (Time's Up!)"; timerDisplay.style.color = "#ff4d4d"; return; }
+            totalSeconds--; let minutes = Math.floor(totalSeconds / 60); let seconds = totalSeconds % 60;
+            timerDisplay.innerHTML = `${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+            if(totalSeconds < 60) timerDisplay.style.color = "#ff9900"; 
+        }, 1000);
+
+        function checkAnswers() {
+            const q1 = document.getElementById('q1').value.toLowerCase().trim();
+            const q2 = document.getElementById('q2').value.toLowerCase().trim();
+            const q3 = document.getElementById('q3').value.replace(/,/g, '').trim();
+            const feedbackBox = document.getElementById('feedback');
+            let score = 0; let errors = [];
+
+            if (q1.includes("hundred") && (q1.includes("thousand") || q1.includes("thousands"))) score++; else errors.push("Q1: Look closely at the Thousands period for 60,401,907.");
+            if (q2.includes("five") && q2.includes("million") && q2.includes("two") && q2.includes("hundred") && q2.includes("thousand") && q2.includes("sixty") && q2.includes("four")) score++; else errors.push("Q2: Double check your spelling for 5,283,164.");
+            if (q3 === "8000000") score++; else errors.push("Q3: The digit 8 is in the millions place. What does that make its value?");
+
+            feedbackBox.style.display = "block";
+            if (score === 3) { feedbackBox.className = "feedback-success"; feedbackBox.innerHTML = "🌟 Excellent work! You got 3/3 correct. You are a Large Numbers Master! 🌟"; } 
+            else { feedbackBox.className = "feedback-error"; feedbackBox.innerHTML = `You got ${score}/3 correct. Let's review the notes:<br> <span style="font-size:0.95rem; font-weight:normal; display:inline-block; margin-top:10px;">${errors.join('<br>')}</span>`; }
+        }
+    </script>
+</body>
+</html>
